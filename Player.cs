@@ -1,39 +1,94 @@
 using System;
 
-namespace ShootingDice
-{
-    public class Player
-    {
-        public string Name { get; set; }
-        public int DiceSize { get; set; } = 6;
 
-        public virtual int Roll()
+public class Player
+{
+    public string Name { get; set; }
+    public int DiceSize { get; set; } = 6;
+
+    public virtual int Roll()
+    {
+        // Return a random number between 1 and DiceSize
+        return new Random().Next(DiceSize) + 1;
+    }
+
+    public virtual void Play(Player other)
+    {
+        // Call roll for "this" object and for the "other" object
+        int myRoll = Roll();
+        int otherRoll = other.Roll();
+
+        Console.WriteLine($"{Name} rolls a {myRoll}");
+
+        if (this is SmackTalkingPlayer smackTalkingPlayer)
         {
-            // Return a random number between 1 and DiceSize
-            return new Random().Next(DiceSize) + 1;
+            Console.WriteLine(smackTalkingPlayer.Taunt);
         }
 
-        public virtual void Play(Player other)
+        else if (this is CreativeSmackTalkingPlayer creativeSmackTalkingPlayer)
         {
-            // Call roll for "this" object and for the "other" object
-            int myRoll = Roll();
-            int otherRoll = other.Roll();
 
-            Console.WriteLine($"{Name} rolls a {myRoll}");
-            Console.WriteLine($"{other.Name} rolls a {otherRoll}");
-            if (myRoll > otherRoll)
+            Console.WriteLine(creativeSmackTalkingPlayer.Taunt);
+
+        }
+
+        Console.WriteLine($"{other.Name} rolls a {otherRoll}");
+
+        if (this is SoreLoserPlayer soreLoserPlayer)
+        {
+            while (true)
             {
-                Console.WriteLine($"{Name} Wins!");
+
+                try
+                {
+                    if (myRoll < otherRoll)
+                    {
+
+                        throw new Exception("There's no way I lost.");
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+                break;
             }
-            else if (myRoll < otherRoll)
+        }
+ else if (this is SoreLoserUpperHalfPlayer soreLoserUpperHalfPlayer)
+        {
+            while (true)
             {
-                Console.WriteLine($"{other.Name} Wins!");
+
+                try
+                {
+                    if (myRoll < otherRoll)
+                    {
+
+                        throw new Exception("Me Losing! It's imposible.");
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+                break;
             }
-            else
-            {
-                // if the rolls are equal it's a tie
-                Console.WriteLine("It's a tie");
-            }
+        }
+
+        if (myRoll > otherRoll)
+        {
+            Console.WriteLine($"{Name} Wins!");
+        }
+        else if (myRoll < otherRoll)
+        {
+            Console.WriteLine($"{other.Name} Wins!");
+        }
+        else
+        {
+            // if the rolls are equal it's a tie
+            Console.WriteLine("It's a tie");
         }
     }
 }

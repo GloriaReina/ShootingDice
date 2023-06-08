@@ -2,24 +2,52 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ShootingDice
-{
+
     class Program
     {
         static void Main(string[] args)
-        {
+        {   
+            /*----------------------- instantiate players---------------------------------*/
+
+            List<string> tauntArsenalList = new List<string>() {
+            "You're making this too easy. It's like you're not even trying!","I'm starting to feel bad for you. It must be tough being so outmatched.","You're playing like a beginner. Maybe you should stick to easier games.","Is that all you've got? I expected more from a player like you!",
+            };
+            SmackTalkingPlayer playerSmack = new SmackTalkingPlayer ("***Is that all you got punk!***");
+            playerSmack.Name = "BigEgo";
+
+            OneHigherPlayer oneHigherPlayer1 = new OneHigherPlayer ();
+            oneHigherPlayer1.Name = "OneUpdude";
+
+            HumanPlayer humanPlayer1 = new HumanPlayer ();
+            humanPlayer1.Name = "Me";
+
+            CreativeSmackTalkingPlayer creativeSmackTalkingPlayer1= new CreativeSmackTalkingPlayer (tauntArsenalList);
+            creativeSmackTalkingPlayer1.Name = "ShxtTalker";
+
+            SoreLoserPlayer soreLoserPlayer1 = new SoreLoserPlayer ();
+            soreLoserPlayer1.Name = "SoreLoser";
+
+            UpperHalfPlayer upperHalfPlayer1 = new UpperHalfPlayer ();
+            upperHalfPlayer1.Name = "HigherRolls";
+
+           SoreLoserUpperHalfPlayer soreLoserUpperHalfPlayer1 = new SoreLoserUpperHalfPlayer ();
+           soreLoserUpperHalfPlayer1.Name = "BadSportHigh";
+
             Player player1 = new Player();
             player1.Name = "Bob";
 
             Player player2 = new Player();
             player2.Name = "Sue";
 
+            Player player3 = new Player();
+            player3.Name = "Wilma";
+
+            /*------------------------------------------------------------------------------*/
+
+            /*------------- access play method to set up games between players--------------*/
             player2.Play(player1);
 
             Console.WriteLine("-------------------");
-
-            Player player3 = new Player();
-            player3.Name = "Wilma";
 
             player3.Play(player2);
 
@@ -32,10 +60,43 @@ namespace ShootingDice
 
             Console.WriteLine("-------------------");
 
+            playerSmack.Play(large);
+
+            Console.WriteLine("-------------------");
+
+            oneHigherPlayer1.Play(playerSmack);
+
+            Console.WriteLine("-------------------");
+
+            humanPlayer1.Play(player2);
+
+            Console.WriteLine("-------------------");
+
+            creativeSmackTalkingPlayer1.Play(soreLoserUpperHalfPlayer1);
+
+            Console.WriteLine("-------------------");
+
+            soreLoserPlayer1.Play(humanPlayer1);
+
+            Console.WriteLine("-------------------");
+
+            upperHalfPlayer1.Play(player2);
+
+            Console.WriteLine("-------------------");
+
+            soreLoserUpperHalfPlayer1.Play(creativeSmackTalkingPlayer1);
+
+            Console.WriteLine("-------------------");
+
+            
+            /*------------------------------------------------------------------------------*/
+
+            //Store players in a list
             List<Player> players = new List<Player>() {
-                player1, player2, player3, large
+                player1, player2, player3, large, playerSmack, oneHigherPlayer1,humanPlayer1,creativeSmackTalkingPlayer1,soreLoserPlayer1, upperHalfPlayer1, soreLoserUpperHalfPlayer1
             };
 
+            //Call PlayMany method
             PlayMany(players);
         }
 
@@ -69,4 +130,3 @@ namespace ShootingDice
             }
         }
     }
-}
